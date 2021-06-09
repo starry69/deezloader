@@ -58,9 +58,7 @@ def request(url, control=False):
 
         try:
             if thing.json()["error"]["message"] == "Quota limit exceeded":
-                raise exceptions.QuotaExceeded(
-                    "Too much requests limit yourself"
-                )
+                raise exceptions.QuotaExceeded("Too much requests limit yourself")
         except KeyError:
             pass
 
@@ -132,10 +130,7 @@ def not_found(song, title):
     url = request(api_search_trk % song.replace("#", ""), True).json()
 
     for b in range(url["total"] + 1):
-        if (
-            url["data"][b]["title"] == title
-            or title in url["data"][b]["title_short"]
-        ):
+        if url["data"][b]["title"] == title or title in url["data"][b]["title_short"]:
             ids = url["data"][b]["link"].split("/")[-1]
             break
 
@@ -156,9 +151,7 @@ def tracking(URL, album=None):
     json_track = request(URL, True).json()
 
     if not album:
-        json_album = request(
-            api_album % str(json_track["album"]["id"]), True
-        ).json()
+        json_album = request(api_album % str(json_track["album"]["id"]), True).json()
 
         datas["genre"] = []
 
@@ -252,9 +245,7 @@ def write_tags(song, data):
             )
         )
 
-        audio.add(
-            USLT(encoding=3, lang=u"eng", desc=u"desc", text=data["lyric"])
-        )
+        audio.add(USLT(encoding=3, lang=u"eng", desc=u"desc", text=data["lyric"]))
 
         audio.save()
     except ID3NoHeaderError:

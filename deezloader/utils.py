@@ -25,7 +25,7 @@ from deezloader.others_settings import spotify_client_id, spotify_client_secret
 def generate_token():
     return oauth2.SpotifyClientCredentials(
         client_id=spotify_client_id, client_secret=spotify_client_secret
-    ).get_access_token()
+    ).get_access_token(as_dict=False)
 
 
 def choose_img(image):
